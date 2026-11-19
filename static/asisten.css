@@ -1,0 +1,156 @@
+/* =========================================================
+   Asisten Belajar (kotak chat). Warna mengikuti materi.css
+   ========================================================= */
+.tombol-asisten {
+    position: fixed;
+    right: 20px;
+    bottom: 84px;              /* di atas tombol Coretan */
+    z-index: 65;               /* di atas arena latihan */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border: 2px solid var(--teks, #2b1d1e);
+    border-radius: 999px;
+    background: var(--emas-muda, #f3e6cc);
+    color: var(--teks, #2b1d1e);
+    font: 800 15px "Plus Jakarta Sans", Arial, sans-serif;
+    box-shadow: 3px 3px 0 var(--teks, #2b1d1e);
+    cursor: pointer;
+}
+.tombol-asisten:hover { transform: translateY(-2px); }
+.tombol-asisten[hidden] { display: none; }
+
+.asisten {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 70;
+    display: flex;
+    flex-direction: column;
+    width: min(380px, calc(100vw - 32px));
+    height: min(560px, calc(100vh - 110px));
+    border: 2.5px solid var(--teks, #2b1d1e);
+    border-radius: 22px;
+    background: var(--krem-terang, #fcf9f3);
+    color: var(--teks, #2b1d1e);
+    box-shadow: 6px 6px 0 var(--teks, #2b1d1e);
+    font-family: "Plus Jakarta Sans", Arial, sans-serif;
+    overflow: hidden;
+}
+.asisten[hidden] { display: none; }
+
+.asisten-kepala {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 12px 12px 16px;
+    background: var(--merah, #7d2027);
+    color: var(--krem-terang, #fcf9f3);
+}
+.asisten-kepala div { flex: 1; display: flex; flex-direction: column; }
+.asisten-kepala strong { font-size: 16px; }
+.asisten-kepala span { font-size: 12px; opacity: .85; }
+.asisten-ikon {
+    width: 34px; height: 34px;
+    border: 1.5px solid #fcf9f366;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: 700 16px "Plus Jakarta Sans", Arial, sans-serif;
+    cursor: pointer;
+}
+.asisten-ikon:hover { background: #fcf9f322; }
+.asisten-tutup {
+    width: auto;
+    padding: 0 12px;
+    border-color: var(--krem-terang, #fcf9f3);
+    background: var(--krem-terang, #fcf9f3);
+    color: var(--merah, #7d2027);
+    font-size: 14px;
+}
+.asisten-tutup:hover { background: var(--emas-muda, #f3e6cc); }
+
+.asisten-isi {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+    overflow-y: auto;
+}
+.asisten-pesan {
+    max-width: 85%;
+    padding: 10px 13px;
+    border-radius: 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+.asisten-pesan.dari-asisten {
+    align-self: flex-start;
+    border: 1.5px solid var(--krem-garis, #e8dfd0);
+    border-bottom-left-radius: 4px;
+    background: #fff;
+}
+.asisten-pesan.dari-siswa {
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    background: var(--merah, #7d2027);
+    color: var(--krem-terang, #fcf9f3);
+}
+.asisten-pesan.menunggu { color: var(--teks-pudar, #7a6a66); font-style: italic; }
+.asisten-pesan.galat { border-color: #e2b4b4; background: var(--merah-pudar, #f8ece8); }
+.asisten-pesan.info { border-color: var(--emas, #b07d3a); background: var(--emas-muda, #f3e6cc); }
+
+.asisten-saran {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 14px;
+}
+.asisten-saran:not(:empty) { padding-bottom: 10px; }
+.asisten-saran button {
+    padding: 6px 11px;
+    border: 1.5px solid var(--teks, #2b1d1e);
+    border-radius: 999px;
+    background: var(--krem, #f7f2e8);
+    color: var(--teks, #2b1d1e);
+    font: 600 13px "Plus Jakarta Sans", Arial, sans-serif;
+    cursor: pointer;
+}
+.asisten-saran button:hover { background: var(--emas-muda, #f3e6cc); }
+
+.asisten-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1.5px solid var(--krem-garis, #e8dfd0);
+}
+.asisten-form textarea {
+    flex: 1;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--teks, #2b1d1e);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--teks, #2b1d1e);
+    font: 500 15px "Plus Jakarta Sans", Arial, sans-serif;
+    resize: none;
+}
+.asisten-form button {
+    width: 44px; height: 42px;
+    border: 2px solid var(--teks, #2b1d1e);
+    border-radius: 14px;
+    background: var(--merah, #7d2027);
+    color: var(--krem-terang, #fcf9f3);
+    font-size: 17px;
+    cursor: pointer;
+}
+.asisten-form button:disabled { opacity: .5; cursor: wait; }
+
+@media (max-width: 520px) {
+    .tombol-asisten { right: 16px; bottom: 80px; padding: 11px 15px; }
+    .asisten { right: 16px; left: 16px; bottom: 16px; width: auto; height: calc(100vh - 96px); }
+}

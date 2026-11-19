@@ -1,0 +1,51 @@
+{% extends "kerangka.html" %}
+
+{% block judul %}Contoh Soal{% endblock %}
+
+{% block kepala %}
+<link rel="stylesheet" href="static/contoh.css">
+{% endblock %}
+
+{% block isi_halaman %}
+<div class="wadah">
+
+    <section class="kepala-hub">
+        <span class="badge">🧩 Contoh Soal</span>
+        <h1>Mau lihat contoh soal yang mana?</h1>
+        <p>
+            {{ semua_kategori | sum(attribute='jumlah') }} contoh soal dari <strong>Modul 5 Teorema Pythagoras</strong>
+            dan <strong>Buku Matematika Kelas VIII Bab 2</strong>, lengkap dengan pembahasan langkah demi langkah.
+            Pilih sub-bab untuk melihat soal-soalnya.
+        </p>
+    </section>
+
+    <div class="grid-topik grid-contoh">
+        {% for k in semua_kategori %}
+        <a href="contoh-{{ k.slug }}.html" class="kartu-topik">
+            <div class="kartu-atas">
+                <span class="ikon-topik ikon-contoh">{{ loop.index }}</span>
+                <span class="jumlah-contoh">{{ k.jumlah }} soal</span>
+            </div>
+            <h3>{{ k.judul }}</h3>
+            <p>{{ k.ringkasan }}</p>
+            <span class="kartu-bawah">
+                <span></span>
+                <span class="mulai">Lihat soal →</span>
+            </span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <aside class="tips-coretan">
+        <strong>✋ Tips:</strong>
+        jangan langsung membuka penyelesaian. Coba kerjakan dulu di <em>Coretan</em> (tombol di pojok kanan bawah),
+        lalu cocokkan jawabanmu langkah demi langkah.
+    </aside>
+
+</div>
+{% endblock %}
+
+{% block skrip %}
+<!-- hujan hanya di halaman pilih, bukan di halaman isi -->
+<script src="static/hujan.js"></script>
+{% endblock %}

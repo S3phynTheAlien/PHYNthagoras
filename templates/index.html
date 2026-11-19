@@ -1,0 +1,173 @@
+{% extends "kerangka.html" %}
+
+{% block judul %}Beranda{% endblock %}
+
+{% block kepala %}
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/beranda.css">
+{% endblock %}
+
+{% block isi_halaman %}
+<div class="beranda">
+
+    <!-- ===== Bento grid ===== -->
+    <section class="bento">
+
+        <!-- Sapaan -->
+        <article class="kartu kartu-sapa">
+            <span class="stiker stiker-apel" aria-hidden="true">🍎</span>
+            <span class="stiker stiker-clover" aria-hidden="true">🍀</span>
+
+            <div class="baris-sapa">
+                <span class="chip-waktu" id="sapa-waktu">Halo 👋</span>
+                <button type="button" class="chip-nama" id="tombol-nama">✎ Panggil aku…</button>
+            </div>
+
+            <form class="form-nama" id="form-nama" hidden>
+                <input type="text" id="isi-nama" maxlength="20" placeholder="Nama panggilanmu" autocomplete="off">
+                <button type="submit">Simpan</button>
+            </form>
+
+            <h1 id="judul-sapa">Hari ini mau ngulik apa?</h1>
+            <p>Pythagoras nggak serumit kelihatannya. Satu materi sehari, pelan-pelan auto paham.</p>
+
+            <a href="materi.html" class="tombol-besar" id="lanjut-belajar">
+                <span>
+                    <small id="lanjut-label">Mulai dari awal</small>
+                    <strong id="lanjut-judul">Kuadrat &amp; Akar Kuadrat</strong>
+                </span>
+                <span class="panah">→</span>
+            </a>
+        </article>
+
+        <!-- Progres -->
+        <article class="kartu kartu-progres">
+            <h2 class="judul-kartu">Progres kamu</h2>
+            <div class="cincin-wadah">
+                <svg viewBox="0 0 120 120" class="cincin" aria-hidden="true">
+                    <circle cx="60" cy="60" r="50" class="cincin-latar"/>
+                    <circle cx="60" cy="60" r="50" class="cincin-isi" id="cincin-isi"/>
+                </svg>
+                <div class="cincin-teks">
+                    <strong id="jumlah-dibuka">0</strong><span>/ {{ semua_topik|length }}</span>
+                </div>
+            </div>
+            <p class="level" id="level">🌱 Baru mulai</p>
+            <button type="button" class="ajak-akun" data-akun-buka data-akun-status>☁️ Masuk supaya progresmu tidak hilang</button>
+            <a href="materi.html" class="link-kecil">Lihat semua materi →</a>
+        </article>
+
+        <!-- Tantangan harian -->
+        <article class="kartu kartu-harian">
+            <div class="kepala-harian">
+                <h2 class="judul-kartu">⚡ Tantangan Harian</h2>
+                <span class="chip-streak" id="chip-streak" title="Hari beruntun">🔥 0 hari</span>
+            </div>
+            <p class="tanggal-harian" id="tanggal-harian"></p>
+            <p class="soal-harian" id="soal-harian">Memuat soal…</p>
+
+            <form class="jawab-harian" id="form-harian">
+                <input type="number" step="any" id="isi-harian" placeholder="Jawabanmu" aria-label="Jawaban tantangan harian">
+                <span class="satuan" id="satuan-harian"></span>
+                <button type="submit">Cek!</button>
+            </form>
+
+            <div class="umpan-harian" id="umpan-harian" aria-live="polite"></div>
+
+            <button type="button" class="tombol-pembahasan" id="tombol-pembahasan" hidden>Lihat pembahasan ↓</button>
+            <div class="pembahasan-harian" id="pembahasan-harian" hidden></div>
+
+            <div class="tips-harian">
+                <span>💡 Bingung? Gambar dulu sketsanya.</span>
+                <button type="button" id="tips-coretan">✎ Buka Coretan</button>
+            </div>
+        </article>
+
+        <!-- Tebak kilat -->
+        <article class="kartu kartu-kilat">
+            <div class="kepala-tebak">
+                <h2 class="judul-kartu">🧠 Tebak Kilat</h2>
+                <span class="chip-beruntun" id="tebak-beruntun">🔥 0</span>
+            </div>
+            <p class="tanya-tebak">Siku-siku atau bukan?</p>
+            <div class="angka-tebak" id="tebak-angka">3 · 4 · 5</div>
+            <div class="tombol-tebak">
+                <button type="button" data-jawab="ya">✓ Siku-siku</button>
+                <button type="button" data-jawab="tidak">✗ Bukan</button>
+            </div>
+            <p class="hasil-tebak" id="tebak-hasil" aria-live="polite">Hitung di kepala, jangan pakai kalkulator 😉</p>
+            <p class="rekor-tebak">Rekor beruntun: <b id="tebak-rekor">0</b></p>
+        </article>
+
+        <!-- Stiker rumus -->
+        <article class="kartu kartu-stiker" aria-label="Rumus Pythagoras">
+            <span class="label-stiker">✦ rumus sakti</span>
+            <span class="rumus-stiker">a²+b²=c²</span>
+            <span class="catatan-stiker">c = sisi miring, selalu yang paling panjang</span>
+        </article>
+
+        <!-- Fakta seru -->
+        <article class="kartu kartu-fakta">
+            <h2 class="judul-kartu">Tahukah kamu? 🤓</h2>
+            <p id="teks-fakta"></p>
+            <button type="button" class="tombol-fakta" id="tombol-fakta">Fakta lain ↻</button>
+        </article>
+    </section>
+
+    <!-- ===== Pita berjalan ===== -->
+    <div class="pita" aria-hidden="true">
+        <div class="pita-isi">
+            {% for _ in range(2) %}
+            <span>3² + 4² = 5²</span><span>✦</span>
+            <span>5² + 12² = 13²</span><span>✦</span>
+            <span>8² + 15² = 17²</span><span>✦</span>
+            <span>7² + 24² = 25²</span><span>✦</span>
+            <span>20² + 21² = 29²</span><span>✦</span>
+            <span>9² + 40² = 41²</span><span>✦</span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ===== Menu utama ===== -->
+    <section class="menu-utama">
+        <h2 class="judul-menu">Mau ke mana sekarang?</h2>
+        <div class="grid-menu">
+            <a href="materi.html" class="ubin ubin-materi">
+                <span class="emoji-ubin">📚</span>
+                <strong>Materi</strong>
+                <span>9 topik, dari nol sampai soal cerita</span>
+                <span class="panah-ubin">↗</span>
+            </a>
+            <a href="contoh.html" class="ubin ubin-contoh">
+                <span class="emoji-ubin">🧩</span>
+                <strong>Contoh Soal</strong>
+                <span>Pembahasan langkah demi langkah</span>
+                <span class="panah-ubin">↗</span>
+            </a>
+            <a href="latihan.html" class="ubin ubin-latihan">
+                <span class="emoji-ubin">🎯</span>
+                <strong>Latihan</strong>
+                <span>Uji kemampuanmu sendiri</span>
+                <span class="panah-ubin">↗</span>
+            </a>
+            <button type="button" class="ubin ubin-coretan" id="ubin-coretan">
+                <span class="emoji-ubin">✏️</span>
+                <strong>Coretan</strong>
+                <span>Kertas buram digital buat ngitung</span>
+                <span class="panah-ubin">↗</span>
+            </button>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block skrip %}
+<!-- daftar materi untuk JavaScript (diisi oleh Flask/Jinja saat build) -->
+<div id="data-topik" hidden
+     data-slug='{{ semua_topik | map(attribute="slug") | list | tojson }}'
+     data-judul='{{ semua_topik | map(attribute="judul") | list | tojson }}'></div>
+<script src="static/beranda.js"></script>
+<!-- hujan apel & clover sebagai latar, di belakang semua kartu -->
+<script src="static/hujan.js"></script>
+{% endblock %}

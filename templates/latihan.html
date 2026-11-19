@@ -1,0 +1,94 @@
+{% extends "kerangka.html" %}
+
+{% block judul %}Latihan{% endblock %}
+
+{% block kepala %}
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/latihan.css">
+{% endblock %}
+
+{% block isi_halaman %}
+<div class="halaman-latihan">
+
+    <!-- Maskot -->
+    <section class="maskot">
+        <div class="wajah-maskot" aria-hidden="true">🍎</div>
+        <div>
+            <strong>Mr. Appel berkata:</strong>
+            <p id="pesan-maskot">Ayo mulai petualanganmu!</p>
+        </div>
+    </section>
+
+    <!-- Statistik -->
+    <section class="statistik">
+        <div class="stat stat-bintang"><span>⭐ Bintang</span><strong id="stat-bintang">0</strong></div>
+        <div class="stat stat-skor"><span>🏆 Skor</span><strong id="stat-skor">0</strong></div>
+        <div class="stat stat-selesai"><span>🎯 Selesai</span><strong id="stat-selesai">0/18</strong></div>
+    </section>
+
+    <button type="button" class="ajak-akun-latihan" data-akun-buka data-akun-status>☁️ Masuk supaya progresmu tidak hilang</button>
+
+    <!-- Cara main -->
+    <details class="cara-main">
+        <summary>📜 Cara main (baca dulu, ya!)</summary>
+        <ul>
+            <li><b>Jawab semua soal</b> di satu level dengan benar untuk membuka level berikutnya.</li>
+            <li><b>Salah satu soal = ulangi level itu.</b> Kamu tidak mundur, cukup selesaikan lagi level yang sama dengan soal baru.</li>
+            <li>Soal <b>diacak</b> setiap kali main. Level yang materinya lebih sulit punya soal lebih banyak.</li>
+            <li>Makin jauh, makin sedikit bantuan:
+                🍎 Kebun Apel ada gambar + rumus + petunjuk →
+                🍀 Ladang Clover tinggal gambar →
+                🌙 Bukit Tanpa Gambar hanya soal cerita.</li>
+            <li>⭐⭐⭐ kalau lulus di percobaan pertama, ⭐⭐ di percobaan kedua, ⭐ setelahnya.</li>
+            <li>Kalau salah, kamu akan diberi tahu letak kesalahan dan materi yang perlu dipelajari lagi.</li>
+            <li>Setelah Level 18, buka <b>👑 Ujian Akhir</b>: 10 soal tanpa bantuan, nilai lulus 75.</li>
+        </ul>
+    </details>
+
+    <!-- Peta dunia (diisi oleh latihan.js) -->
+    <div id="peta-dunia"></div>
+
+    <!-- Ujian akhir -->
+    <section class="kartu-ujian">
+        <span class="hiasan hiasan-1" aria-hidden="true">👑</span>
+        <span class="hiasan hiasan-2" aria-hidden="true">✨</span>
+        <h2 class="nama-dunia"><span>🏰</span> Ujian Akhir</h2>
+        <div class="info-dunia"><span class="chip-dunia">Istana PHYN • 10 soal • Tanpa bantuan</span></div>
+        <p class="ket-dunia">
+            Soal campuran dari semua materi. Jawabanmu baru dinilai di akhir.
+            Setelah ujian, kamu akan mendapat rekomendasi materi yang perlu dipelajari lagi.
+        </p>
+        <div class="baris-ujian">
+            <button type="button" class="tombol-ujian" id="tombol-ujian" disabled>🔒 Selesaikan Level 18 dulu</button>
+            <span class="nilai-ujian" id="nilai-ujian"></span>
+        </div>
+    </section>
+
+    <button type="button" class="tombol-reset" id="tombol-reset">↺ Hapus progres latihan</button>
+</div>
+
+<!-- Arena soal -->
+<div class="arena" id="arena" hidden>
+    <div class="arena-isi">
+        <header class="arena-kepala">
+            <button type="button" class="arena-keluar" id="arena-keluar" aria-label="Keluar">✕</button>
+            <div class="arena-info">
+                <strong id="arena-judul">Level 1</strong>
+                <div class="bar"><span id="arena-bar"></span></div>
+            </div>
+            <span class="arena-hitung" id="arena-hitung">1/3</span>
+        </header>
+        <div class="arena-badan" id="arena-badan"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block skrip %}
+<!-- daftar materi untuk JavaScript (diisi oleh Flask/Jinja saat build) -->
+<div id="data-topik" hidden
+     data-slug='{{ semua_topik | map(attribute="slug") | list | tojson }}'
+     data-judul='{{ semua_topik | map(attribute="judul") | list | tojson }}'></div>
+<script src="static/latihan.js"></script>
+<!-- hujan di peta level; berhenti saat soal latihan dibuka -->
+<script src="static/hujan.js"></script>
+{% endblock %}
